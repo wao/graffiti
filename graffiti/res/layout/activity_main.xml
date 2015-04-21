@@ -2,6 +2,11 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent" >
+	<info.thinkmore.android.graffiti.DrawingView
+	    android:id="@+id/drawing"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    />
 
 	
 </RelativeLayout>
