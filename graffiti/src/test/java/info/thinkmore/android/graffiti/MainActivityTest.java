@@ -23,7 +23,7 @@ public class MainActivityTest {
     }
 
   @org.junit.Test
-  public void titleIsCorrect() throws Exception {
+  public void changeColor() throws Exception {
     Activity activity = Robolectric.setupActivity(MainActivity_.class);
 
     DrawingView dv = (DrawingView) activity.findViewById( R.id.drawing );
