@@ -2,6 +2,7 @@ package info.thinkmore.android.graffiti;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
 
 import org.androidannotations.annotations.*;
 
@@ -19,6 +21,12 @@ public class MainActivity
 {
 
     Handler handler = new Handler();
+
+    @ViewById(R.id.drawing)
+    DrawingView drawingView;
+
+    @ViewById(R.id.radiogroup_color)
+    RadioGroup rgColor;
 
     // Called at the start of the full lifetime.
     @SuppressLint("NewApi")
@@ -96,6 +104,30 @@ public class MainActivity
 
     @AfterViews
     void afterViews() {
+        rgColor.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged( RadioGroup rg, int checkedId ){
+                switch( checkedId ){
+                    case R.id.rb_black:
+                        drawingView.setPaintColor( Color.BLACK );
+                        break;
+                    case R.id.rb_green:
+                        drawingView.setPaintColor( Color.GREEN );
+                        break;
+                    case R.id.rb_red:
+                        drawingView.setPaintColor( Color.RED );
+                        break;
+                }
+            }
+        } );
+
+        drawingView.setPaintColor( Color.RED );
+        rgColor.check( R.id.rb_red );
+    }
+
+    @Click(R.id.btn_clear)
+    public void onBtnClearClicked(View clickedView){
+        drawingView.clearCanvas();
     }
 
     @Override

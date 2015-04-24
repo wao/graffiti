@@ -1,6 +1,10 @@
 package info.thinkmore.android.graffiti;
 
+import java.util.Arrays;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,37 +20,81 @@ import android.view.View;
 
 import com.google.common.collect.*;
 
-class DrawingView extends View {
-    Path total_path = new Path();
+public class DrawingView extends View {
+    static class Line{
+        float[] points;
+        int color;
 
-    static class Points{
-        List<float[]> pointsList = Lists.newArrayList();
-        float[] points =  new float[4000];
+        private Line(float[] datas, int length, int color ){
+            points = Arrays.copyOf( datas, length );
+            this.color = color;
+        }
+
+        public static Line newInstance(float[] datas, int length, int color ){
+            return new Line( datas, length, color );
+        }
+        
+        public Line draw( Canvas canvas, Paint paint ){
+            paint.setColor( color );
+            canvas.drawLines( points, 0, points.length, paint );
+            return this;
+        }
+    }
+
+
+    static class Lines{
+        final public static int MAX_POINT_NUM_PER_LINE = 4000;
+        List<Line> lines = Lists.newArrayList();
+
+        float[] points = new float[MAX_POINT_NUM_PER_LINE];
 
         int lastIndex = 0;
 
-        Points add( float value ){
+        @Getter @Setter int currentColor;
+
+        Lines(int currentColor ){
+            this.currentColor = currentColor;
+        }
+
+        Lines(){
+            this( Color.BLACK );
+        }
+
+        Lines clear(){
+            lastIndex = 0;
+            lines.clear();
+            return this;
+        }
+
+        Lines newLine(){
+            lines.add( Line.newInstance( points, lastIndex, currentColor ) );
+            lastIndex = 0;
+            return this;
+        }
+
+        Lines add( float value ){
             if( lastIndex >= 4000 ){
-                pointsList.add( points );
-                points = new float[4000];
-                lastIndex = 0;
+                newLine();
             }
 
             points[lastIndex++] = value;
             return this;
         }
 
-        Points drawLines( Canvas canvas, Paint paint ){
-            for( float[] p : pointsList ){
-                canvas.drawLines( p, paint );
+        Lines drawLines( Canvas canvas, Paint paint ){
+            for( Line p : lines ){
+                p.draw( canvas, paint );
             }
+
+            paint.setColor( currentColor );
 
             canvas.drawLines( points, 0, lastIndex, paint );
             return this;
         }
     }
 
-    Points points = new Points();
+
+    Lines lines = new Lines();
 
     float mLastX;
     float mLastY;
@@ -74,10 +122,11 @@ class DrawingView extends View {
     }
 
 
+    final static String SUPERSTATE = "SUPERSTATE";
     @Override
     public Parcelable onSaveInstanceState() {
         Bundle state=new Bundle();
-        //state.putParcelable(SUPERSTATE, super.onSaveInstanceState()); 
+        state.putParcelable(SUPERSTATE, super.onSaveInstanceState()); 
         //state.putInt(COLOR, getColor());
 
         return(state);
@@ -85,8 +134,8 @@ class DrawingView extends View {
 
     @Override
     public void onRestoreInstanceState(Parcelable ss) {
-        //Bundle state=(Bundle)ss;
-        //super.onRestoreInstanceState(state.getParcelable(SUPERSTATE));
+        Bundle state=(Bundle)ss;
+        super.onRestoreInstanceState(state.getParcelable(SUPERSTATE));
 
         //setColor(state.getInt(COLOR));
     }
@@ -111,10 +160,10 @@ class DrawingView extends View {
                     final float y = event.getY();
 
 
-                    points.add( mLastX );
-                    points.add( mLastY );
-                    points.add( x );
-                    points.add( y );
+                    lines.add( mLastX );
+                    lines.add( mLastY );
+                    lines.add( x );
+                    lines.add( y );
 
                     mLastX = x;
                     mLastY = y;
@@ -126,9 +175,12 @@ class DrawingView extends View {
                     final float x = event.getX();
                     final float y = event.getY();
 
-                    mLastX = x;
-                    mLastY = y;
+                    lines.add( mLastX );
+                    lines.add( mLastY );
+                    lines.add( x );
+                    lines.add( y );
 
+                    lines.newLine();
                     //points.add( x );
                     //points.add( y );
                 }
@@ -140,12 +192,25 @@ class DrawingView extends View {
         return true;
     }
 
+    public void setPaintColor(int color){
+        lines.setCurrentColor( color );
+    }
+
+    public int getPaintColor(){
+        return lines.getCurrentColor();
+    }
+
+    public void clearCanvas(){
+        lines.clear();
+        invalidate();
+    }
+
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw( canvas );
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor( Color.GREEN );
-        paint.setStrokeWidth(3);
-        points.drawLines( canvas, paint );
+        paint.setStrokeWidth(10);
+        lines.drawLines( canvas, paint );
     }
 }
