@@ -29,6 +29,8 @@
             <!--<arg line="-cp ${compile_classpath}"/>-->
             <env key="CLASSPATH" value="${compile_classpath}"/>
             <arg line="-proc:only" />
+            <arg line="-source 1.7" />
+            <arg line="-target 1.7" />
             <arg line="-processor com.google.java.contract.core.apt.AnnotationProcessor"/>
             <arg line="-Acom.google.java.contract.classpath=${compile_classpath}"/>
             <arg line="-Acom.google.java.contract.sourcepath=${src.dir}"/>
@@ -38,6 +40,9 @@
             <fileset dir="${src.dir}">
                 <include name="**/*.java"/>
             </fileset>
+            <!--<fileset dir="${generated_src.dir}">-->
+                <!--<include name="**/*.java"/>-->
+            <!--</fileset>-->
         </apply>
 
         <apply executable="java" verbose="true">

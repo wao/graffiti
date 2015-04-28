@@ -26,9 +26,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.java.contract</groupId>
+            <groupId>info.thinkmore.android</groupId>
             <artifactId>cofoja</artifactId>
-            <version>1.1-r150</version>
+            <version>1.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -125,16 +125,11 @@
                     <source>1.6</source>
                     <target>1.6</target>
                     <useIncrementalCompilation>false</useIncrementalCompilation>
+                    <compilerArgs>
+                        <arg>-Acom.google.java.contract.dryrun</arg>
+                    </compilerArgs>
                     <!--<showDeprecation>true</showDeprecation>-->
                     <!--<showWarnings>true</showWarnings>-->
-                    <annotationProcessors>
-                        <annotationProcessor>
-                            org.androidannotations.AndroidAnnotationProcessor
-                        </annotationProcessor>
-                        <!--<annotationProcessor>-->
-                        <!--com.google.java.contract.core.apt.AnnotationProcessor-->
-                        <!--</annotationProcessor>-->
-                    </annotationProcessors>
                 </configuration>
             </plugin>
             <plugin>
@@ -165,6 +160,7 @@
                                 <property name="src.dir" value="${project.build.sourceDirectory}" />
                                 <property name="dump.dir" value="${project.build.directory}/dump" />
                                 <property name="contracts.dir" value="${project.build.directory}/contracts" />
+                                <property name="generated_src.dir" value="${project.build.directory}/generated-sources" />
                                 <ant antfile="${basedir}/cofoja_offline.xml" target="cofoja" />
                             </target>
                             <!--<target>-->
