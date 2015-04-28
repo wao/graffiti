@@ -161,7 +161,7 @@
                                 <property name="compile_classpath" refid="maven.compile.classpath"/>
                                 <property name="output.dir" value="${project.build.outputDirectory}" />
                                 <property name="src.dir" value="${project.build.sourceDirectory}" />
-                                <!--<ant antfile="${basedir}/cofoja_offline.xml" target="cofoja" />-->
+                                <ant antfile="${basedir}/cofoja_offline.xml" target="cofoja" />
                             </target>
                             <!--<target>-->
                             <!--<echo message="ant running"/>-->

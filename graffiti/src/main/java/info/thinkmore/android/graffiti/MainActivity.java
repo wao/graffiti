@@ -45,7 +45,7 @@ public class MainActivity
         // Initialize activity.
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        testCofoja(5);
+        testCofoja(1);
         
         if( Build.VERSION.SDK_INT < 16 ){
             getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );

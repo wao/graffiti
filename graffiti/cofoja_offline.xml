@@ -3,6 +3,8 @@
         <include name="**/*.class"/>
     </fileset>
 
+    <property name="build.compiler" value="extJavac"/>
+
     <target name="default">
         <echo message="${compile_classpath}"/>
     </target>
@@ -15,6 +17,27 @@
             <!--<arg value="${cofoja.class.str}" />-->
         <!--</java>-->
         
+        <!--<javac srcdir="${src.dir}" includes="**/*.java" classpath="${compile_classpath}:${output.dir}" destdir="${output.dir}" verbose="yes">-->
+            <!--<compilerarg line=" -processor com.google.java.contract.core.apt.AnnotationProcessor"/>-->
+            <!--<compilerarg line="-proc:only" />-->
+            <!--<compilerarg line="-Acom.google.java.contract.classpath=${compile_classpath}:{output.dir}"/>-->
+            <!--<compilerarg line="-Acom.google.java.contract.sourcepath=${src.dir}"/>-->
+            <!--<compilerarg line="-Acom.google.java.contract.classoutput=${output.dir}"/>-->
+        <!--</javac>-->
+
+        <apply executable="/usr/lib/jvm/java-7-oracle/bin/javac" verbose="true">
+            <!--<arg value="-cp ${compile_classpath}"/>-->
+            <env key="CLASSPATH" value="${compile_classpath}"/>
+            <arg value="-proc:only" />
+            <arg line="-processor com.google.java.contract.core.apt.AnnotationProcessor"/>
+            <arg value="-Acom.google.java.contract.classpath=${compile_classpath}"/>
+            <arg value="-Acom.google.java.contract.sourcepath=${src.dir}"/>
+            <arg value="-Acom.google.java.contract.classoutput=${output.dir}"/>
+            <fileset dir="${src.dir}">
+                <include name="**/*.java"/>
+            </fileset>
+        </apply>
+
         <apply executable="java" verbose="true">
             <env key="CLASSPATH" value="${compile_classpath}"/>
             <arg value="-Dcom.google.java.contract.classpath=${compile_classpath}"/>
@@ -26,7 +49,7 @@
             </fileset>
         </apply>
 
-        <apply executable="ls" verbose="true">
+        <apply executable="rm" verbose="true">
             <fileset dir="${output.dir}">
                 <include name="**/*.contracts"/>
             </fileset>
