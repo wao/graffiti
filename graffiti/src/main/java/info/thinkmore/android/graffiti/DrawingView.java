@@ -3,8 +3,8 @@ package info.thinkmore.android.graffiti;
 import java.util.Arrays;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+//import lombok.Getter;
+//import lombok.Setter;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -50,6 +50,7 @@ public class DrawingView extends View {
 
         int lastIndex = 0;
 
+        //@Getter @Setter int currentColor;
         int currentColor;
 
         public void setCurrentColor(int value){
