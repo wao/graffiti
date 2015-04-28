@@ -50,7 +50,15 @@ public class DrawingView extends View {
 
         int lastIndex = 0;
 
-        @Getter @Setter int currentColor;
+        int currentColor;
+
+        public void setCurrentColor(int value){
+            currentColor = value;
+        }
+
+        public int getCurrentColor(){
+            return currentColor;
+        }
 
         Lines(int currentColor ){
             this.currentColor = currentColor;

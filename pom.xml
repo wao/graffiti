@@ -101,6 +101,22 @@
                         <source>1.6</source>
                         <target>1.6</target>
                         <useIncrementalCompilation>false</useIncrementalCompilation>
+                        <!--<showDeprecation>true</showDeprecation>-->
+                        <!--<showWarnings>true</showWarnings>-->
+                        <compilerArgs>
+                            <arg>-Acom.google.java.contract.classoutput=${project.build.outputDirectory}</arg>
+                            <arg>-Acom.google.java.contract.classpath=${maven.compile.classpath}</arg>
+                            <arg>-Acom.google.java.contract.sourcepath=${project.build.sourceDirectory}</arg>
+                        </compilerArgs>
+                        <fork>true</fork>
+                        <annotationProcessors>
+                            <annotationProcessor>
+                                org.androidannotations.AndroidAnnotationProcessor
+                            </annotationProcessor>
+                            <annotationProcessor>
+                                com.google.java.contract.core.apt.AnnotationProcessor
+                            </annotationProcessor>
+                        </annotationProcessors>
                     </configuration>
                 </plugin>
                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->

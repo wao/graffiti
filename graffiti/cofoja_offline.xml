@@ -1,0 +1,35 @@
+<project>
+    <fileset id="cofoja.pre.class.list" dir="${output.dir}">
+        <include name="**/*.class"/>
+    </fileset>
+
+    <target name="default">
+        <echo message="${compile_classpath}"/>
+    </target>
+
+    <target name="cofoja">
+        <!--<java classname="com.google.java.contract.core.agent.PreMain" fork="true" classpath="${compile_classpath}">-->
+            <!--<jvmarg value="-Dcom.google.java.contract.classpath=${toString:classpath}"/>-->
+            <!--<jvmarg value="-Dcom.google.java.contract.sourcepath=${src.dir}"/>-->
+            <!--<jvmarg value="-Dcom.google.java.contract.classoutput=${output.dir}"/>-->
+            <!--<arg value="${cofoja.class.str}" />-->
+        <!--</java>-->
+        
+        <apply executable="java" verbose="true">
+            <env key="CLASSPATH" value="${compile_classpath}"/>
+            <arg value="-Dcom.google.java.contract.classpath=${compile_classpath}"/>
+            <arg value="-Dcom.google.java.contract.sourcepath=${src.dir}"/>
+            <arg value="-Dcom.google.java.contract.classoutput=${output.dir}"/>
+            <arg value="com.google.java.contract.core.agent.PreMain" />
+            <fileset dir="${output.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </apply>
+
+        <apply executable="ls" verbose="true">
+            <fileset dir="${output.dir}">
+                <include name="**/*.contracts"/>
+            </fileset>
+        </apply>
+    </target>
+</project>

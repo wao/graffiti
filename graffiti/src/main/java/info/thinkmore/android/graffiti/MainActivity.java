@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.RadioGroup;
 
 import org.androidannotations.annotations.*;
+//import butterknife.*;
+import com.google.java.contract.Requires;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity
@@ -22,11 +24,18 @@ public class MainActivity
 
     Handler handler = new Handler();
 
+    /*@InjectView(R.id.drawing)*/
     @ViewById(R.id.drawing)
     DrawingView drawingView;
 
     @ViewById(R.id.radiogroup_color)
     RadioGroup rgColor;
+
+    @Requires("x>3")
+    void testCofoja(int x){
+    }
+
+
 
     // Called at the start of the full lifetime.
     @SuppressLint("NewApi")
@@ -35,6 +44,8 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         // Initialize activity.
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        testCofoja(5);
         
         if( Build.VERSION.SDK_INT < 16 ){
             getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
@@ -64,6 +75,10 @@ public class MainActivity
                 }
             });
         }
+
+        setContentView(R.layout.activity_main);
+        //ButterKnife.inject(this);
+        //afterViews();
     }
 
     @SuppressLint("NewApi")
@@ -125,6 +140,7 @@ public class MainActivity
         rgColor.check( R.id.rb_red );
     }
 
+    //@OnClick(R.id.btn_clear)
     @Click(R.id.btn_clear)
     public void onBtnClearClicked(View clickedView){
         drawingView.clearCanvas();
