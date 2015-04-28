@@ -11,10 +11,10 @@
 
     <target name="cofoja">
         <!--<java classname="com.google.java.contract.core.agent.PreMain" fork="true" classpath="${compile_classpath}">-->
-            <!--<jvmarg value="-Dcom.google.java.contract.classpath=${toString:classpath}"/>-->
-            <!--<jvmarg value="-Dcom.google.java.contract.sourcepath=${src.dir}"/>-->
-            <!--<jvmarg value="-Dcom.google.java.contract.classoutput=${output.dir}"/>-->
-            <!--<arg value="${cofoja.class.str}" />-->
+            <!--<jvmarg line="-Dcom.google.java.contract.classpath=${toString:classpath}"/>-->
+            <!--<jvmarg line="-Dcom.google.java.contract.sourcepath=${src.dir}"/>-->
+            <!--<jvmarg line="-Dcom.google.java.contract.classoutput=${output.dir}"/>-->
+            <!--<arg line="${cofoja.class.str}" />-->
         <!--</java>-->
         
         <!--<javac srcdir="${src.dir}" includes="**/*.java" classpath="${compile_classpath}:${output.dir}" destdir="${output.dir}" verbose="yes">-->
@@ -26,13 +26,15 @@
         <!--</javac>-->
 
         <apply executable="/usr/lib/jvm/java-7-oracle/bin/javac" verbose="true">
-            <!--<arg value="-cp ${compile_classpath}"/>-->
+            <!--<arg line="-cp ${compile_classpath}"/>-->
             <env key="CLASSPATH" value="${compile_classpath}"/>
-            <arg value="-proc:only" />
+            <arg line="-proc:only" />
             <arg line="-processor com.google.java.contract.core.apt.AnnotationProcessor"/>
-            <arg value="-Acom.google.java.contract.classpath=${compile_classpath}"/>
-            <arg value="-Acom.google.java.contract.sourcepath=${src.dir}"/>
-            <arg value="-Acom.google.java.contract.classoutput=${output.dir}"/>
+            <arg line="-Acom.google.java.contract.classpath=${compile_classpath}"/>
+            <arg line="-Acom.google.java.contract.sourcepath=${src.dir}"/>
+            <arg line="-Acom.google.java.contract.classoutput=${output.dir}"/>
+            <!--<arg line="-Acom.google.java.contract.dump=${dump.dir}"/>-->
+            <arg line="-Acom.google.java.contract.debug"/>
             <fileset dir="${src.dir}">
                 <include name="**/*.java"/>
             </fileset>
@@ -40,19 +42,21 @@
 
         <apply executable="java" verbose="true">
             <env key="CLASSPATH" value="${compile_classpath}"/>
-            <arg value="-Dcom.google.java.contract.classpath=${compile_classpath}"/>
-            <arg value="-Dcom.google.java.contract.sourcepath=${src.dir}"/>
-            <arg value="-Dcom.google.java.contract.classoutput=${output.dir}"/>
-            <arg value="com.google.java.contract.core.agent.PreMain" />
+            <arg line="-Dcom.google.java.contract.classpath=${compile_classpath}"/>
+            <arg line="-Dcom.google.java.contract.sourcepath=${src.dir}"/>
+            <arg line="-Dcom.google.java.contract.classoutput=${output.dir}"/>
+            <!--<arg line="-Acom.google.java.contract.dump=${dump.dir}"/>-->
+            <arg line="-Dcom.google.java.contract.debug"/>
+            <arg line="com.google.java.contract.core.agent.PreMain" />
             <fileset dir="${output.dir}">
                 <include name="**/*.class"/>
             </fileset>
         </apply>
 
-        <apply executable="rm" verbose="true">
+        <move todir="${contracts.dir}">
             <fileset dir="${output.dir}">
                 <include name="**/*.contracts"/>
             </fileset>
-        </apply>
+        </move>
     </target>
 </project>

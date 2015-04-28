@@ -24,13 +24,13 @@ public class MainActivityTest {
 
   @org.junit.Test
   public void changeColor() throws Exception {
-    //Activity activity = Robolectric.setupActivity(MainActivity_.class);
+    Activity activity = Robolectric.setupActivity(MainActivity_.class);
 
-    //DrawingView dv = (DrawingView) activity.findViewById( R.id.drawing );
-    //assertEquals( Color.RED, dv.getPaintColor() );
+    DrawingView dv = (DrawingView) activity.findViewById( R.id.drawing );
+    assertEquals( Color.RED, dv.getPaintColor() );
 
-    //clickAndCheckColor( activity, dv, R.id.rb_black, Color.BLACK );
-    //clickAndCheckColor( activity, dv, R.id.rb_red, Color.RED );
-    //clickAndCheckColor( activity, dv, R.id.rb_green, Color.GREEN );
+    clickAndCheckColor( activity, dv, R.id.rb_black, Color.BLACK );
+    clickAndCheckColor( activity, dv, R.id.rb_red, Color.RED );
+    clickAndCheckColor( activity, dv, R.id.rb_green, Color.GREEN );
   }
 }

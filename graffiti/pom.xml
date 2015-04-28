@@ -147,6 +147,7 @@
                         <configuration>
                             <target>
                                 <mkdir dir="${project.build.directory}/contracts" />
+                                <mkdir dir="${project.build.directory}/dump" />
                             </target>
                         </configuration>
                         <goals>
@@ -160,7 +161,10 @@
                             <target>
                                 <property name="compile_classpath" refid="maven.compile.classpath"/>
                                 <property name="output.dir" value="${project.build.outputDirectory}" />
+                                <!--<property name="output.dir" value="${project.build.directory}/contracts" />-->
                                 <property name="src.dir" value="${project.build.sourceDirectory}" />
+                                <property name="dump.dir" value="${project.build.directory}/dump" />
+                                <property name="contracts.dir" value="${project.build.directory}/contracts" />
                                 <ant antfile="${basedir}/cofoja_offline.xml" target="cofoja" />
                             </target>
                             <!--<target>-->
