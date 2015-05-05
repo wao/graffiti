@@ -17,7 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Plugins -->
-        <android-maven-plugin.version>3.8.2</android-maven-plugin.version>
+        <android-maven-plugin.version>4.1.1</android-maven-plugin.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <api.platform>21</api.platform>
 
@@ -84,7 +84,7 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <groupId>com.simpligility.maven.plugins</groupId>
                     <artifactId>android-maven-plugin</artifactId>
                     <version>${android-maven-plugin.version}</version>
                     <extensions>true</extensions>
@@ -92,6 +92,12 @@
                         <sdk>
                             <platform>${api.platform}</platform>
                         </sdk>
+                        <resourceDirectory>
+                            res
+                        </resourceDirectory>
+                        <androidManifestFile>
+                            AndroidManifest.xml
+                        </androidManifestFile>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -115,9 +121,7 @@
                             <pluginExecutions>
                                 <pluginExecution>
                                     <pluginExecutionFilter>
-                                        <groupId>
-                                            com.jayway.maven.plugins.android.generation2
-                                        </groupId>
+                                        <groupId>com.simpligility.maven.plugins</groupId>
                                         <artifactId>
                                             android-maven-plugin
                                         </artifactId>

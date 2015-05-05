@@ -26,8 +26,9 @@
         <!--</javac>-->
 
         <apply executable="/usr/lib/jvm/java-7-oracle/bin/javac" verbose="true">
-            <!--<arg line="-cp ${compile_classpath}"/>-->
-            <env key="CLASSPATH" value="${compile_classpath}"/>
+            <arg line="-cp ${compile_classpath}"/>
+            <!--<env key="CLASSPATH" value="${compile_classpath}"/>-->
+            <arg value="-verbose" />
             <arg line="-proc:only" />
             <arg line="-source 1.7" />
             <arg line="-target 1.7" />
