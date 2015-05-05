@@ -75,44 +75,44 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
-                <executions>
-                    <execution>
-                        <id>build-classpath</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>build-classpath</goal>
-                        </goals>
-                        <configuration>
-                            <outputProperty>cofoja_classpath</outputProperty>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.soebes.maven.plugins</groupId>
-                <artifactId>maven-echo-plugin</artifactId>
-                <version>0.1</version>
-                <executions>
-                    <execution>
-                        <id>default-cli</id> 
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>echo</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <echos>
-                        <echo>==================================================</echo>
-                        <echo>${project.build.outputDirectory}</echo>
-                        <echo>${cofoja_classpath}</echo>
-                    </echos>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<version>2.8</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>build-classpath</id>-->
+                        <!--<phase>process-classes</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>build-classpath</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<outputProperty>cofoja_classpath</outputProperty>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>com.soebes.maven.plugins</groupId>-->
+                <!--<artifactId>maven-echo-plugin</artifactId>-->
+                <!--<version>0.1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>default-cli</id> -->
+                        <!--<phase>process-classes</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>echo</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--<echos>-->
+                        <!--<echo>==================================================</echo>-->
+                        <!--<echo>${project.build.outputDirectory}</echo>-->
+                        <!--<echo>${cofoja_classpath}</echo>-->
+                    <!--</echos>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>com.simpligility.maven.plugins</groupId>
                 <artifactId>android-maven-plugin</artifactId>
@@ -122,11 +122,9 @@
                 <groupId>info.thinkmore</groupId>
                 <artifactId>cofoja-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
-                <configuration>
-                    <classpath>${cofoja_classpath}</classpath>
-                </configuration>
                 <executions>
                     <execution>
+                        <id>default-cli</id>
                         <phase>process-classes</phase>
                         <goals>
                             <goal>run</goal>
@@ -141,54 +139,51 @@
                     <source>1.6</source>
                     <target>1.6</target>
                     <useIncrementalCompilation>false</useIncrementalCompilation>
-                    <compilerArgs>
-                        <arg>-Acom.google.java.contract.dryrun</arg>
-                    </compilerArgs>
                     <!--<showDeprecation>true</showDeprecation>-->
                     <!--<showWarnings>true</showWarnings>-->
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>make-dir-for-cofoja</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <target>
-                                <mkdir dir="${project.build.directory}/contracts" />
-                                <mkdir dir="${project.build.directory}/dump" />
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <configuration>
-                            <id>process-cofoja</id>
-                            <target>
-                                <property name="compile_classpath" refid="maven.compile.classpath"/>
-                                <property name="output.dir" value="${project.build.outputDirectory}" />
-                                <!--<property name="output.dir" value="${project.build.directory}/contracts" />-->
-                                <property name="src.dir" value="${project.build.sourceDirectory}" />
-                                <property name="dump.dir" value="${project.build.directory}/dump" />
-                                <property name="contracts.dir" value="${project.build.directory}/contracts" />
-                                <property name="generated_src.dir" value="${project.build.directory}/generated-sources" />
-                                <!--<ant antfile="${basedir}/cofoja_offline.xml" target="cofoja" />-->
-                            </target>
+            <!--<plugin>-->
+                <!--<artifactId>maven-antrun-plugin</artifactId>-->
+                <!--<version>1.8</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>make-dir-for-cofoja</id>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<configuration>-->
                             <!--<target>-->
-                            <!--<echo message="ant running"/>-->
+                                <!--<mkdir dir="${project.build.directory}/contracts" />-->
+                                <!--<mkdir dir="${project.build.directory}/dump" />-->
                             <!--</target>-->
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+                        <!--</configuration>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<phase>process-classes</phase>-->
+                        <!--<configuration>-->
+                            <!--<id>process-cofoja</id>-->
+                            <!--<target>-->
+                                <!--<property name="compile_classpath" refid="maven.compile.classpath"/>-->
+                                <!--<property name="output.dir" value="${project.build.outputDirectory}" />-->
+                                <!--[><property name="output.dir" value="${project.build.directory}/contracts" /><]-->
+                                <!--<property name="src.dir" value="${project.build.sourceDirectory}" />-->
+                                <!--<property name="dump.dir" value="${project.build.directory}/dump" />-->
+                                <!--<property name="contracts.dir" value="${project.build.directory}/contracts" />-->
+                                <!--<property name="generated_src.dir" value="${project.build.directory}/generated-sources" />-->
+                                <!--[><ant antfile="${basedir}/cofoja_offline.xml" target="cofoja" /><]-->
+                            <!--</target>-->
+                            <!--[><target><]-->
+                            <!--[><echo message="ant running"/><]-->
+                            <!--[></target><]-->
+                        <!--</configuration>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
 
         </plugins>
 
