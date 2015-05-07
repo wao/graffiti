@@ -31,11 +31,6 @@ public class MainActivity
     @ViewById(R.id.radiogroup_color)
     RadioGroup rgColor;
 
-    @Requires("x>3")
-    void testCofoja(int x){
-    }
-
-
 
     // Called at the start of the full lifetime.
     @SuppressLint("NewApi")
@@ -45,8 +40,6 @@ public class MainActivity
         // Initialize activity.
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        testCofoja(1);
-        
         if( Build.VERSION.SDK_INT < 16 ){
             getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
         }

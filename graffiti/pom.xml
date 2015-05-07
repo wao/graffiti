@@ -115,7 +115,13 @@
             <plugin>
                 <groupId>com.simpligility.maven.plugins</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-
+                <configuration>
+                    <dex>
+                        <jvmArguments>
+                            <jvmArgument>-Xmx2048M</jvmArgument>
+                        </jvmArguments>
+                    </dex>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>info.thinkmore</groupId>
@@ -124,7 +130,7 @@
                 <executions>
                     <execution>
                         <id>default-cli</id>
-                        <phase>process-classes</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
