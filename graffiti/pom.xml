@@ -343,4 +343,79 @@
             </plugins>
         </pluginManagement>
     </build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<properties>
+				<android.release>true</android.release>
+				<android.apk.debug>false</android.apk.debug>
+				<!--<android.proguard.config>../proguard-release.cfg</android.proguard.config>-->
+				<android.proguard.skip>false</android.proguard.skip>
+				<apk.raw>${project.build.directory}/${project.artifactId}-${project.version}.apk</apk.raw>
+				<apk.signed.aligned>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</apk.signed.aligned>
+			</properties>
+			<build>
+				<plugins>
+
+					<!-- Signing (needs to be declared before zipalign) -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>signing</id>
+								<goals>
+									<goal>sign</goal>
+									<goal>verify</goal>
+								</goals>
+								<phase>package</phase>
+								<inherited>true</inherited>
+								<configuration>
+									<includes>
+										<include>${apk.raw}</include>
+									</includes>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- zipAlign -->
+					<plugin>
+                        <groupId>com.simpligility.maven.plugins</groupId>
+						<artifactId>android-maven-plugin</artifactId>
+						<inherited>true</inherited>
+						<configuration>
+							<sign>
+								<debug>false</debug>
+							</sign>
+							<zipalign>
+								<skip>false</skip>
+								<verbose>true</verbose>
+								<inputApk>${apk.raw}</inputApk>
+								<outputApk>${apk.signed.aligned}</outputApk>
+							</zipalign>
+						</configuration>
+						<executions>
+							<execution>
+								<id>alignApk</id>
+								<phase>package</phase>
+								<goals>
+									<goal>zipalign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
