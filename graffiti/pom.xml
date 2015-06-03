@@ -222,34 +222,53 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9.1</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/r/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Run annotation processors on src/main/java sources -->
             <!--<plugin>-->
-            <!--<groupId>org.bsc.maven</groupId>-->
-            <!--<artifactId>maven-processor-plugin</artifactId>-->
-            <!--<version>3.1.0-beta1</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>process</id>-->
-            <!--<goals>-->
-            <!--<goal>process</goal>-->
-            <!--</goals>-->
-            <!--<phase>generate-sources</phase>-->
-            <!--<configuration>-->
-            <!--[><sources><]-->
-            <!--[><source>src/main/java</source><]-->
-            <!--[><source>target/generated-sources</source><]-->
-            <!--[></sources><]-->
-            <!--<compilerArguments>-XprintRounds</compilerArguments>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--<execution>-->
-            <!--<id>process-test</id>-->
-            <!--<goals>-->
-            <!--<goal>process-test</goal>-->
-            <!--</goals>-->
-            <!--<phase>generate-test-sources</phase>-->
-            <!--</execution>-->
-            <!--</executions>-->
+                <!--<groupId>org.bsc.maven</groupId>-->
+                <!--<artifactId>maven-processor-plugin</artifactId>-->
+                <!--<version>3.1.0-beta1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>process</id>-->
+                        <!--<goals>-->
+                            <!--<goal>process</goal>-->
+                        <!--</goals>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<configuration>-->
+                            <!--[><sources><]-->
+                            <!--[><source>src/main/java</source><]-->
+                            <!--[><source>target/generated-sources</source><]-->
+                            <!--[></sources><]-->
+                            <!--<compilerArguments>-XprintRounds</compilerArguments>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>process-test</id>-->
+                        <!--<goals>-->
+                            <!--<goal>process-test</goal>-->
+                        <!--</goals>-->
+                        <!--<phase>generate-test-sources</phase>-->
+                    <!--</execution>-->
+                <!--</executions>-->
             <!--</plugin>-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
